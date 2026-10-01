@@ -4,72 +4,111 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admo UGC Studio — UGC videos for D2C brands</title>
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="site.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-  body { font-family: 'Inter', sans-serif; }
-  .grad { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-  .glass { background: rgba(255,255,255,0.06); }
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap');
+  :root { --paper: #faf7f1; --ink: #1c1a16; --muted: #6b655a; --green: #1e5c3f; --line: #e5ddcf; }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  nav { position: sticky; top: 0; background: rgba(250,247,241,.94); border-bottom: 1px solid var(--line); z-index: 10; }
+  nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; padding-bottom: 14px; }
+  .brand { font-weight: 600; font-size: 17px; }
+  .btn { display: inline-block; background: var(--green); color: #fff; padding: 13px 28px; border-radius: 10px; font-weight: 600; text-decoration: none; }
+  .btn:hover { background: #16452f; }
+  .navlink { color: var(--muted); text-decoration: none; margin-right: 22px; font-size: 14px; }
+  header.hero { padding: 72px 0 40px; }
+  .kicker { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--green); font-weight: 600; margin-bottom: 16px; }
+  h1 { font-family: 'Fraunces', serif; font-weight: 800; font-size: clamp(38px, 6vw, 64px); line-height: 1.05; letter-spacing: -1px; max-width: 16ch; }
+  .lede { font-size: 18px; color: var(--muted); max-width: 56ch; margin: 20px 0 28px; }
+  .math { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 36px 0; background: #fff; }
+  .math div { padding: 22px; }
+  .math div + div { border-left: 1px solid var(--line); }
+  .math b { font-family: 'Fraunces', serif; font-size: 30px; display: block; }
+  .math span { font-size: 13px; color: var(--muted); }
+  section { padding: 56px 0; }
+  h2 { font-family: 'Fraunces', serif; font-size: 32px; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .sub { color: var(--muted); margin-bottom: 28px; max-width: 60ch; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .step { border-top: 3px solid var(--green); padding-top: 14px; }
+  .step b { display: block; margin-bottom: 4px; }
+  .step p { font-size: 14px; color: var(--muted); }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 28px; position: relative; display: flex; flex-direction: column; }
+  .card.hot { border: 2px solid var(--green); }
+  .tag { position: absolute; top: -13px; left: 24px; background: var(--green); color: #fff; font-size: 12px; font-weight: 600; padding: 3px 12px; border-radius: 20px; }
+  .card h3 { font-size: 20px; margin-bottom: 2px; }
+  .card .count { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .price { font-family: 'Fraunces', serif; font-size: 38px; font-weight: 800; }
+  .per { font-size: 13px; color: var(--green); font-weight: 600; margin-bottom: 16px; }
+  .card ul { list-style: none; padding: 0; margin: 0 0 22px; font-size: 14px; }
+  .card li { padding: 5px 0 5px 26px; position: relative; }
+  .card li::before { content: "✓"; position: absolute; left: 2px; color: var(--green); font-weight: 700; }
+  .card .btn { text-align: center; margin-top: auto; }
+  .faq details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+  .faq summary { font-weight: 600; cursor: pointer; }
+  .faq p { color: var(--muted); font-size: 15px; margin-top: 8px; max-width: 62ch; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; font-size: 14px; color: var(--muted); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  footer a { color: var(--ink); }
+  .wa { position: fixed; bottom: 22px; right: 22px; width: 56px; height: 56px; border-radius: 50%; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 26px; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+  @media (max-width: 720px) { .steps, .grid3 { grid-template-columns: 1fr; } .math { grid-template-columns: 1fr; } .math div + div { border-left: none; border-top: 1px solid var(--line); } }
 </style>
 </head>
-<body class="bg-gray-950 text-white">
-<nav class="max-w-6xl mx-auto px-4 py-5 flex justify-between items-center">
-  <span class="font-bold text-lg" data-brand>Admo UGC Studio</span>
-  <div class="flex gap-3 text-sm">
-    <a href="#packages" class="text-gray-300 hover:text-white">Packages</a>
-    <a href="#faq" class="text-gray-300 hover:text-white">FAQ</a>
-    <a href="order.html?package=growth" class="grad px-4 py-2 rounded-lg font-semibold">Order now</a>
-  </div>
-</nav>
+<body>
+<nav><div class="wrap">
+  <span class="brand" data-brand>Admo UGC Studio</span>
+  <span><a class="navlink" href="#packages">Packages</a><a class="navlink" href="#faq">FAQ</a><a class="btn" style="padding:9px 20px" href="order.html?package=growth">Order now</a></span>
+</div></nav>
 
-<header class="max-w-4xl mx-auto px-4 pt-14 pb-10 text-center">
-  <h1 class="text-4xl md:text-6xl font-extrabold leading-tight" data-tagline>15 scroll-stopping UGC videos for less than one hire's week.</h1>
-  <p class="text-gray-400 mt-5 text-lg">Pro-shot, scripted, edited UGC for Meta &amp; Instagram ads. From ₹2,333 a video.</p>
-  <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-    <a href="order.html?package=growth" class="grad px-8 py-4 rounded-xl font-semibold text-lg">Get 15 videos — ₹35,000</a>
-    <a href="#packages" class="glass border border-white/20 px-8 py-4 rounded-xl font-semibold text-lg">See packages</a>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">UGC video production · India</div>
+  <h1 data-tagline>15 ad-ready UGC videos for less than one week's hire.</h1>
+  <p class="lede">Your Meta ads die when creative runs out. We shoot, script and edit a month of creator content for D2C brands, starting at ₹2,333 a video.</p>
+  <p><a class="btn" href="order.html?package=growth">Get 15 videos — ₹35,000</a></p>
+  <div class="math">
+    <div><b>₹2,333</b><span>per video in the Growth pack, vs ₹8,000+ bought solo</span></div>
+    <div><b>7 days</b><span>to first cuts after you approve the brief</span></div>
+    <div><b>15 videos</b><span>a month of fresh ad creative, Meta + Instagram ready</span></div>
   </div>
-  <div id="demo-slot" class="mt-10 hidden">
-    <div class="aspect-video rounded-2xl overflow-hidden border border-white/10">
-      <iframe id="demo-frame" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
-    </div>
+  <div id="demo-slot" style="display:none">
+    <iframe id="demo-frame" style="width:100%;aspect-ratio:16/9;border:1px solid var(--line);border-radius:14px" frameborder="0" allowfullscreen></iframe>
   </div>
 </header>
 
-<section class="max-w-5xl mx-auto px-4 py-12">
-  <h2 class="text-2xl font-bold text-center mb-8">How it works</h2>
-  <div class="grid md:grid-cols-3 gap-4">
-    <div class="glass rounded-2xl p-6 border border-white/10"><div class="text-3xl font-bold text-purple-400 mb-2">1</div><h3 class="font-semibold mb-1">Send your brief</h3><p class="text-sm text-gray-400">Products, angles, do's and don'ts. Two minutes on the order form.</p></div>
-    <div class="glass rounded-2xl p-6 border border-white/10"><div class="text-3xl font-bold text-purple-400 mb-2">2</div><h3 class="font-semibold mb-1">We shoot + edit</h3><p class="text-sm text-gray-400">Pro setup, UGC scripting, Meta-ready cuts. Revisions included.</p></div>
-    <div class="glass rounded-2xl p-6 border border-white/10"><div class="text-3xl font-bold text-purple-400 mb-2">3</div><h3 class="font-semibold mb-1">You run ads</h3><p class="text-sm text-gray-400">Fresh creative every week. No more fatigued ad sets.</p></div>
+<section>
+  <h2>How ordering works</h2>
+  <p class="sub">Three steps, no calls required unless you want one.</p>
+  <div class="steps">
+    <div class="step"><b>1. Send the brief</b><p>Products, angles, language versions. Two minutes on the order form.</p></div>
+    <div class="step"><b>2. We shoot and edit</b><p>Real creators, pro setup, cuts sized for Reels and feed. Two revisions per video.</p></div>
+    <div class="step"><b>3. You run the ads</b><p>New creative every week. Retire whatever fatigues.</p></div>
   </div>
 </section>
 
-<section id="packages" class="max-w-5xl mx-auto px-4 py-12">
-  <h2 class="text-2xl font-bold text-center mb-8">Packages</h2>
-  <div id="pkg-grid" class="grid md:grid-cols-3 gap-5"></div>
+<section id="packages">
+  <h2>Packages</h2>
+  <p class="sub">Fixed scope, fixed price. Custom briefs welcome.</p>
+  <div id="pkg-grid" class="grid3"></div>
 </section>
 
-<section id="faq" class="max-w-3xl mx-auto px-4 py-12">
-  <h2 class="text-2xl font-bold text-center mb-8">FAQ</h2>
-  <div class="space-y-3 text-sm">
-    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">How fast is delivery?</p><p class="text-gray-400">First cuts within 7 days of brief approval, rest rolling.</p></div>
-    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">Who shoots the videos?</p><p class="text-gray-400">Our in-house crew and creator network — pro setup, real people, no stock.</p></div>
-    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">What if I need changes?</p><p class="text-gray-400">2 basic revisions per video are included in every package.</p></div>
-    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">Can I customize?</p><p class="text-gray-400">Yes — pick Custom and describe it, or message us on WhatsApp.</p></div>
-    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">How do I pay?</p><p class="text-gray-400">We confirm your order on WhatsApp first, then share payment details. No advance needed to enquire.</p></div>
-  </div>
+<section id="faq" class="faq">
+  <h2>Questions brands ask</h2>
+  <p class="sub">Straight answers, no sales pitch.</p>
+  <details><summary>Who is in the videos?</summary><p>Working creators from our network, matched to your category. Not stock, not AI avatars.</p></details>
+  <details><summary>What do you need from me?</summary><p>Products shipped to our studio, plus a half-page brief: angles, offers, languages. We handle scripting.</p></details>
+  <details><summary>What if a video misses?</summary><p>Two revisions per video are included. If a cut still doesn't work, we reshoot the hook once, free.</p></details>
+  <details><summary>How do I pay?</summary><p>We confirm everything on WhatsApp first, then raise an invoice. 50% to start the shoot, 50% on delivery.</p></details>
+  <details><summary>Can I start small?</summary><p>Yes. The 5-video Starter exists for exactly that: test one hero product before committing monthly.</p></details>
 </section>
+</div>
 
-<footer class="border-t border-white/10 mt-8">
-  <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between gap-3 text-sm text-gray-500">
-    <span data-brand>Admo UGC Studio</span>
-    <span><a id="foot-mail" href="#" class="hover:text-white">Email us</a></span>
-  </div>
-</footer>
-
-<a id="wa-float" href="#" class="fixed bottom-5 right-5 w-14 h-14 rounded-full grad flex items-center justify-center text-2xl shadow-lg" title="Chat on WhatsApp">✆</a>
+<footer><div class="wrap">
+  <span data-brand>Admo UGC Studio</span>
+  <span><a id="foot-mail" href="#">Email us</a></span>
+</div></footer>
+<a id="wa-float" class="wa" href="#" title="Chat on WhatsApp">✆</a>
 
 <script>
   document.querySelectorAll('[data-brand]').forEach(e => e.textContent = SITE.brand);
@@ -77,24 +116,23 @@
   document.title = SITE.brand + " — UGC videos for D2C brands";
   const grid = document.getElementById('pkg-grid');
   SITE.packages.forEach(p => {
-    const price = p.price ? "₹" + p.price.toLocaleString("en-IN") : "Let's talk";
-    const per = p.price ? "<p class='text-xs text-gray-500 mb-3'>₹" + Math.round(p.price / p.videos).toLocaleString("en-IN") + " per video</p>" : "";
-    const card = document.createElement('div');
-    card.className = "rounded-2xl p-6 border " + (p.popular ? "grad border-transparent relative" : "glass border-white/10");
-    card.innerHTML =
-      (p.popular ? "<span class='absolute -top-3 right-4 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full'>MOST POPULAR</span>" : "") +
-      "<h3 class='text-xl font-bold'>" + p.name + "</h3>" +
-      "<p class='text-sm text-gray-300 opacity-80 mb-2'>" + (p.videos ? p.videos + " videos" : "Flexible") + " — " + p.blurb + "</p>" +
-      "<div class='text-3xl font-extrabold my-2'>" + price + "</div>" + per +
-      "<ul class='text-sm space-y-1 mb-5 " + (p.popular ? "" : "text-gray-300") + "'>" +
-      p.features.map(f => "<li>✓ " + f + "</li>").join("") + "</ul>" +
-      "<a href='order.html?package=" + p.id + "' class='block text-center py-3 rounded-xl font-semibold " + (p.popular ? "bg-white text-purple-700" : "grad") + "'>Order " + p.name + "</a>";
-    grid.appendChild(card);
+    const price = p.price ? "₹" + p.price.toLocaleString("en-IN") : "On quote";
+    const per = p.price ? "<div class='per'>₹" + Math.round(p.price / p.videos).toLocaleString("en-IN") + " per video</div>" : "";
+    const el = document.createElement('div');
+    el.className = "card" + (p.popular ? " hot" : "");
+    el.innerHTML =
+      (p.popular ? "<span class='tag'>Most ordered</span>" : "") +
+      "<h3>" + p.name + "</h3><div class='count'>" +
+      (p.videos ? p.videos + " videos · " + p.blurb : p.blurb) + "</div>" +
+      "<div class='price'>" + price + "</div>" + per +
+      "<ul>" + p.features.map(f => "<li>" + f + "</li>").join("") + "</ul>" +
+      "<a class='btn' href='order.html?package=" + p.id + "'>Order " + p.name + "</a>";
+    grid.appendChild(el);
   });
   document.getElementById('foot-mail').href = "mailto:" + SITE.email;
-  document.getElementById('wa-float').href = "https://wa.me/" + SITE.whatsapp + "?text=" + encodeURIComponent("Hi " + SITE.brand + "! I want to know more about your UGC packages.");
+  document.getElementById('wa-float').href = "https://wa.me/" + SITE.whatsapp + "?text=" + encodeURIComponent("Hi " + SITE.brand + "! Tell me about your UGC packages.");
   if (SITE.demoVideoUrl) {
-    document.getElementById('demo-slot').classList.remove('hidden');
+    document.getElementById('demo-slot').style.display = "block";
     document.getElementById('demo-frame').src = SITE.demoVideoUrl;
   }
 </script>

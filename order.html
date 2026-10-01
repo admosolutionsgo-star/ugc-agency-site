@@ -4,38 +4,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order — Admo UGC Studio</title>
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="site.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-  body { font-family: 'Inter', sans-serif; }
-  .grad { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-  .glass { background: rgba(255,255,255,0.06); }
-  input, select, textarea { background: #1f2937; border: 1px solid rgba(255,255,255,0.15); border-radius: 0.75rem; padding: 0.75rem 1rem; width: 100%; color: white; }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: #667eea; }
-  label { font-size: 0.875rem; color: #9ca3af; display: block; margin-bottom: 0.4rem; }
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap');
+  :root { --paper: #faf7f1; --ink: #1c1a16; --muted: #6b655a; --green: #1e5c3f; --line: #e5ddcf; }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.6; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+  nav { border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; padding-bottom: 14px; }
+  .brand { font-weight: 600; font-size: 17px; text-decoration: none; color: var(--ink); }
+  .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+  h1 { font-family: 'Fraunces', serif; font-size: 38px; letter-spacing: -0.5px; margin: 40px 0 6px; }
+  .lede { color: var(--muted); margin-bottom: 32px; }
+  label { font-size: 13px; font-weight: 600; display: block; margin: 20px 0 6px; }
+  input, select, textarea { width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 15px; font-family: inherit; color: var(--ink); }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--green); }
+  .btn { display: block; width: 100%; background: var(--green); color: #fff; border: none; padding: 16px; border-radius: 10px; font-size: 17px; font-weight: 600; cursor: pointer; margin-top: 28px; }
+  .btn:hover { background: #16452f; }
+  .note { font-size: 13px; color: var(--muted); text-align: center; margin: 14px 0 60px; }
+  #summary { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 14px; font-size: 14px; margin-top: 20px; display: none; white-space: pre-wrap; }
 </style>
 </head>
-<body class="bg-gray-950 text-white">
-<nav class="max-w-3xl mx-auto px-4 py-5 flex justify-between items-center">
-  <a href="index.html" class="font-bold text-lg" data-brand>Admo UGC Studio</a>
-  <a href="index.html#packages" class="text-sm text-gray-300 hover:text-white">← Packages</a>
-</nav>
-
-<main class="max-w-xl mx-auto px-4 py-8">
-  <h1 class="text-3xl font-extrabold mb-2">Place your order</h1>
-  <p class="text-gray-400 mb-8">Fill this in — WhatsApp opens with everything pre-written. Just press send.</p>
-  <div class="space-y-5">
-    <div><label>Package</label><select id="f-pkg"></select></div>
-    <div><label>Your name</label><input id="f-name" placeholder="Priya Sharma"></div>
-    <div><label>Brand / company</label><input id="f-brand" placeholder="GlowKart"></div>
-    <div><label>Phone (optional)</label><input id="f-phone" placeholder="+91 ..."></div>
-    <div><label>Brief — products, angles, links</label><textarea id="f-brief" rows="4" placeholder="3 skincare SKUs, unboxing + routine angles, need Hindi + English versions"></textarea></div>
-    <button id="f-go" class="grad w-full py-4 rounded-xl font-semibold text-lg">Send order on WhatsApp</button>
-    <p class="text-xs text-gray-500 text-center">No advance payment. We confirm on WhatsApp first.</p>
-  </div>
-</main>
-
+<body>
+<nav><div class="wrap" style="max-width:1080px">
+  <a class="brand" href="index.html" data-brand>Admo UGC Studio</a>
+  <a class="back" href="index.html#packages">← Packages</a>
+</div></nav>
+<div class="wrap">
+  <h1>Place your order</h1>
+  <p class="lede">Fill this in. WhatsApp opens with everything written out. You press send.</p>
+  <label>Package</label><select id="f-pkg"></select>
+  <label>Your name</label><input id="f-name" placeholder="Priya Sharma" autocomplete="name">
+  <label>Brand / company</label><input id="f-brand" placeholder="GlowKart" autocomplete="organization">
+  <label>Phone (optional, for faster replies)</label><input id="f-phone" placeholder="+91 ..." autocomplete="tel">
+  <label>Brief — products, angles, languages</label><textarea id="f-brief" rows="4" placeholder="3 skincare SKUs, unboxing plus routine angles, Hindi and English versions"></textarea>
+  <div id="summary"></div>
+  <button class="btn" id="f-go">Send order on WhatsApp</button>
+  <p class="note">No advance payment. We confirm on WhatsApp, then invoice 50% to start.</p>
+</div>
 <script>
   document.querySelectorAll('[data-brand]').forEach(e => e.textContent = SITE.brand);
   const sel = document.getElementById('f-pkg');
@@ -47,13 +54,24 @@
   });
   const pre = new URLSearchParams(location.search).get('package');
   if (pre && SITE.packages.some(p => p.id === pre)) sel.value = pre;
+  function refresh() {
+    const name = document.getElementById('f-name').value.trim();
+    const brand = document.getElementById('f-brand').value.trim();
+    const brief = document.getElementById('f-brief').value.trim();
+    const box = document.getElementById('summary');
+    if (name && brand && brief) {
+      const p = SITE.packages.find(x => x.id === sel.value);
+      box.style.display = "block";
+      box.textContent = "Order preview\nPackage: " + (p ? p.name : sel.value) + (p && p.price ? " (₹" + p.price.toLocaleString("en-IN") + ")" : "") + "\nName: " + name + "\nBrand: " + brand + "\nBrief: " + brief;
+    } else box.style.display = "none";
+  }
+  ["f-pkg", "f-name", "f-brand", "f-brief"].forEach(id => document.getElementById(id).addEventListener('input', refresh));
   document.getElementById('f-go').onclick = () => {
     const name = document.getElementById('f-name').value.trim();
     const brand = document.getElementById('f-brand').value.trim();
     const brief = document.getElementById('f-brief').value.trim();
-    if (!name || !brand || !brief) { alert("Please fill name, brand and brief."); return; }
-    const url = orderLink(sel.value, name, brand, document.getElementById('f-phone').value.trim(), brief);
-    window.open(url, "_blank");
+    if (!name || !brand || !brief) { alert("Name, brand and brief are required."); return; }
+    window.open(orderLink(sel.value, name, brand, document.getElementById('f-phone').value.trim(), brief), "_blank");
   };
 </script>
 </body>
