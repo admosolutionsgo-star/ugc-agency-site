@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order — Admo UGC Studio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="site.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  body { font-family: 'Inter', sans-serif; }
+  .grad { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+  .glass { background: rgba(255,255,255,0.06); }
+  input, select, textarea { background: #1f2937; border: 1px solid rgba(255,255,255,0.15); border-radius: 0.75rem; padding: 0.75rem 1rem; width: 100%; color: white; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: #667eea; }
+  label { font-size: 0.875rem; color: #9ca3af; display: block; margin-bottom: 0.4rem; }
+</style>
+</head>
+<body class="bg-gray-950 text-white">
+<nav class="max-w-3xl mx-auto px-4 py-5 flex justify-between items-center">
+  <a href="index.html" class="font-bold text-lg" data-brand>Admo UGC Studio</a>
+  <a href="index.html#packages" class="text-sm text-gray-300 hover:text-white">← Packages</a>
+</nav>
+
+<main class="max-w-xl mx-auto px-4 py-8">
+  <h1 class="text-3xl font-extrabold mb-2">Place your order</h1>
+  <p class="text-gray-400 mb-8">Fill this in — WhatsApp opens with everything pre-written. Just press send.</p>
+  <div class="space-y-5">
+    <div><label>Package</label><select id="f-pkg"></select></div>
+    <div><label>Your name</label><input id="f-name" placeholder="Priya Sharma"></div>
+    <div><label>Brand / company</label><input id="f-brand" placeholder="GlowKart"></div>
+    <div><label>Phone (optional)</label><input id="f-phone" placeholder="+91 ..."></div>
+    <div><label>Brief — products, angles, links</label><textarea id="f-brief" rows="4" placeholder="3 skincare SKUs, unboxing + routine angles, need Hindi + English versions"></textarea></div>
+    <button id="f-go" class="grad w-full py-4 rounded-xl font-semibold text-lg">Send order on WhatsApp</button>
+    <p class="text-xs text-gray-500 text-center">No advance payment. We confirm on WhatsApp first.</p>
+  </div>
+</main>
+
+<script>
+  document.querySelectorAll('[data-brand]').forEach(e => e.textContent = SITE.brand);
+  const sel = document.getElementById('f-pkg');
+  SITE.packages.forEach(p => {
+    const o = document.createElement('option');
+    o.value = p.id;
+    o.textContent = p.name + (p.price ? " — ₹" + p.price.toLocaleString("en-IN") : " — custom quote");
+    sel.appendChild(o);
+  });
+  const pre = new URLSearchParams(location.search).get('package');
+  if (pre && SITE.packages.some(p => p.id === pre)) sel.value = pre;
+  document.getElementById('f-go').onclick = () => {
+    const name = document.getElementById('f-name').value.trim();
+    const brand = document.getElementById('f-brand').value.trim();
+    const brief = document.getElementById('f-brief').value.trim();
+    if (!name || !brand || !brief) { alert("Please fill name, brand and brief."); return; }
+    const url = orderLink(sel.value, name, brand, document.getElementById('f-phone').value.trim(), brief);
+    window.open(url, "_blank");
+  };
+</script>
+</body>
+</html>

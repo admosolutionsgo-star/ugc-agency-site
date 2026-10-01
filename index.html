@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admo UGC Studio — UGC videos for D2C brands</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="site.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  body { font-family: 'Inter', sans-serif; }
+  .grad { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+  .glass { background: rgba(255,255,255,0.06); }
+</style>
+</head>
+<body class="bg-gray-950 text-white">
+<nav class="max-w-6xl mx-auto px-4 py-5 flex justify-between items-center">
+  <span class="font-bold text-lg" data-brand>Admo UGC Studio</span>
+  <div class="flex gap-3 text-sm">
+    <a href="#packages" class="text-gray-300 hover:text-white">Packages</a>
+    <a href="#faq" class="text-gray-300 hover:text-white">FAQ</a>
+    <a href="order.html?package=growth" class="grad px-4 py-2 rounded-lg font-semibold">Order now</a>
+  </div>
+</nav>
+
+<header class="max-w-4xl mx-auto px-4 pt-14 pb-10 text-center">
+  <h1 class="text-4xl md:text-6xl font-extrabold leading-tight" data-tagline>15 scroll-stopping UGC videos for less than one hire's week.</h1>
+  <p class="text-gray-400 mt-5 text-lg">Pro-shot, scripted, edited UGC for Meta &amp; Instagram ads. From ₹2,333 a video.</p>
+  <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+    <a href="order.html?package=growth" class="grad px-8 py-4 rounded-xl font-semibold text-lg">Get 15 videos — ₹35,000</a>
+    <a href="#packages" class="glass border border-white/20 px-8 py-4 rounded-xl font-semibold text-lg">See packages</a>
+  </div>
+  <div id="demo-slot" class="mt-10 hidden">
+    <div class="aspect-video rounded-2xl overflow-hidden border border-white/10">
+      <iframe id="demo-frame" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</header>
+
+<section class="max-w-5xl mx-auto px-4 py-12">
+  <h2 class="text-2xl font-bold text-center mb-8">How it works</h2>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="glass rounded-2xl p-6 border border-white/10"><div class="text-3xl font-bold text-purple-400 mb-2">1</div><h3 class="font-semibold mb-1">Send your brief</h3><p class="text-sm text-gray-400">Products, angles, do's and don'ts. Two minutes on the order form.</p></div>
+    <div class="glass rounded-2xl p-6 border border-white/10"><div class="text-3xl font-bold text-purple-400 mb-2">2</div><h3 class="font-semibold mb-1">We shoot + edit</h3><p class="text-sm text-gray-400">Pro setup, UGC scripting, Meta-ready cuts. Revisions included.</p></div>
+    <div class="glass rounded-2xl p-6 border border-white/10"><div class="text-3xl font-bold text-purple-400 mb-2">3</div><h3 class="font-semibold mb-1">You run ads</h3><p class="text-sm text-gray-400">Fresh creative every week. No more fatigued ad sets.</p></div>
+  </div>
+</section>
+
+<section id="packages" class="max-w-5xl mx-auto px-4 py-12">
+  <h2 class="text-2xl font-bold text-center mb-8">Packages</h2>
+  <div id="pkg-grid" class="grid md:grid-cols-3 gap-5"></div>
+</section>
+
+<section id="faq" class="max-w-3xl mx-auto px-4 py-12">
+  <h2 class="text-2xl font-bold text-center mb-8">FAQ</h2>
+  <div class="space-y-3 text-sm">
+    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">How fast is delivery?</p><p class="text-gray-400">First cuts within 7 days of brief approval, rest rolling.</p></div>
+    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">Who shoots the videos?</p><p class="text-gray-400">Our in-house crew and creator network — pro setup, real people, no stock.</p></div>
+    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">What if I need changes?</p><p class="text-gray-400">2 basic revisions per video are included in every package.</p></div>
+    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">Can I customize?</p><p class="text-gray-400">Yes — pick Custom and describe it, or message us on WhatsApp.</p></div>
+    <div class="glass rounded-xl p-4 border border-white/10"><p class="font-semibold mb-1">How do I pay?</p><p class="text-gray-400">We confirm your order on WhatsApp first, then share payment details. No advance needed to enquire.</p></div>
+  </div>
+</section>
+
+<footer class="border-t border-white/10 mt-8">
+  <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between gap-3 text-sm text-gray-500">
+    <span data-brand>Admo UGC Studio</span>
+    <span><a id="foot-mail" href="#" class="hover:text-white">Email us</a></span>
+  </div>
+</footer>
+
+<a id="wa-float" href="#" class="fixed bottom-5 right-5 w-14 h-14 rounded-full grad flex items-center justify-center text-2xl shadow-lg" title="Chat on WhatsApp">✆</a>
+
+<script>
+  document.querySelectorAll('[data-brand]').forEach(e => e.textContent = SITE.brand);
+  document.querySelectorAll('[data-tagline]').forEach(e => e.textContent = SITE.tagline);
+  document.title = SITE.brand + " — UGC videos for D2C brands";
+  const grid = document.getElementById('pkg-grid');
+  SITE.packages.forEach(p => {
+    const price = p.price ? "₹" + p.price.toLocaleString("en-IN") : "Let's talk";
+    const per = p.price ? "<p class='text-xs text-gray-500 mb-3'>₹" + Math.round(p.price / p.videos).toLocaleString("en-IN") + " per video</p>" : "";
+    const card = document.createElement('div');
+    card.className = "rounded-2xl p-6 border " + (p.popular ? "grad border-transparent relative" : "glass border-white/10");
+    card.innerHTML =
+      (p.popular ? "<span class='absolute -top-3 right-4 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full'>MOST POPULAR</span>" : "") +
+      "<h3 class='text-xl font-bold'>" + p.name + "</h3>" +
+      "<p class='text-sm text-gray-300 opacity-80 mb-2'>" + (p.videos ? p.videos + " videos" : "Flexible") + " — " + p.blurb + "</p>" +
+      "<div class='text-3xl font-extrabold my-2'>" + price + "</div>" + per +
+      "<ul class='text-sm space-y-1 mb-5 " + (p.popular ? "" : "text-gray-300") + "'>" +
+      p.features.map(f => "<li>✓ " + f + "</li>").join("") + "</ul>" +
+      "<a href='order.html?package=" + p.id + "' class='block text-center py-3 rounded-xl font-semibold " + (p.popular ? "bg-white text-purple-700" : "grad") + "'>Order " + p.name + "</a>";
+    grid.appendChild(card);
+  });
+  document.getElementById('foot-mail').href = "mailto:" + SITE.email;
+  document.getElementById('wa-float').href = "https://wa.me/" + SITE.whatsapp + "?text=" + encodeURIComponent("Hi " + SITE.brand + "! I want to know more about your UGC packages.");
+  if (SITE.demoVideoUrl) {
+    document.getElementById('demo-slot').classList.remove('hidden');
+    document.getElementById('demo-frame').src = SITE.demoVideoUrl;
+  }
+</script>
+</body>
+</html>
